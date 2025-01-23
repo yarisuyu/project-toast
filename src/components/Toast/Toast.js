@@ -18,22 +18,18 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ type, hide, children }) {
-  if (typeof (type) !== String || type.length() < 1) {
-    type = 'notice';
-  }
-
-  const ToastType = ICONS_BY_VARIANT[type];
+function Toast({ variant, onClose, children }) {
+  const ToastIcon = ICONS_BY_VARIANT[variant];
 
   return (
-    <div className={`${styles.toast} ${styles[type]}`}>
+    <div className={`${styles.toast} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
-        <ToastType size={24} />
+        <ToastIcon size={24} />
       </div>
       <p className={styles.content}>
         {children}
       </p>
-      <button className={styles.closeButton} onClick={hide}>
+      <button className={styles.closeButton} onClick={onClose}>
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
