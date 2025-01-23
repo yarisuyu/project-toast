@@ -3,7 +3,10 @@ import React from 'react';
 import Toast from '../Toast';
 import styles from './ToastShelf.module.css';
 
-function ToastShelf({data, onCloseItem}) {
+import { ToastContext } from '../ToastProvider';
+
+function ToastShelf() {
+  const { toastList: data, removeFromToastList: onCloseItem } = React.useContext(ToastContext);
   return (
     <ol className={styles.wrapper}>
       {data.map(({ id, message, variant }) => {
