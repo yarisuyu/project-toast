@@ -26,7 +26,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {<ToastShelf />}
+      <ToastShelf />
 
       <form
         className={styles.controlsWrapper}

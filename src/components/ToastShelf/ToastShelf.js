@@ -6,7 +6,22 @@ import styles from './ToastShelf.module.css';
 import { ToastContext } from '../ToastProvider';
 
 function ToastShelf() {
-  const { toastList: data, removeFromToastList: onCloseItem } = React.useContext(ToastContext);
+  const { toastList: data, removeFromToastList: onCloseItem, clearToastList } = React.useContext(ToastContext);
+
+  function handleClearToasts(event){
+    if (event.key === 'Escape') {
+      clearToastList();
+    }
+  }
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleClearToasts);
+
+    return () => {
+      document.removeEventListener("keydown", handleClearToasts);
+    }
+  }, []);
+
   return (
     <ol className={styles.wrapper}>
       {data.map(({ id, message, variant }) => {
