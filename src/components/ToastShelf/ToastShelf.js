@@ -8,22 +8,27 @@ import { ToastContext } from '../ToastProvider';
 function ToastShelf() {
   const { toastList: data, removeFromToastList: onCloseItem, clearToastList } = React.useContext(ToastContext);
 
-  function handleClearToasts(event){
-    if (event.key === 'Escape') {
-      clearToastList();
-    }
-  }
-
   React.useEffect(() => {
-    document.addEventListener("keydown", handleClearToasts);
+    function handleKeyDown(event){
+      if (event.code === 'Escape') {
+        clearToastList();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleClearToasts);
+      window.removeEventListener("keydown", handleKeyDown);
     }
-  }, []);
+  }, [clearToastList]);
 
   return (
-    <ol className={styles.wrapper}>
+    <ol
+      className={styles.wrapper}
+      role="region"
+      aria-live="polite"
+      aria-label="Notification"
+    >
       {data.map(({ id, message, variant }) => {
         return (
           <li className={styles.toastWrapper} key={id}>
