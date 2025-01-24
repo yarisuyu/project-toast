@@ -9,6 +9,8 @@ import {
 
 import VisuallyHidden from '../VisuallyHidden';
 
+import { ToastContext } from '../ToastProvider';
+
 import styles from './Toast.module.css';
 
 const ICONS_BY_VARIANT = {
@@ -18,8 +20,10 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ variant, onClose, children }) {
+function Toast({ variant, children }) {
   const ToastIcon = ICONS_BY_VARIANT[variant];
+
+  const { removeFromToastList: handleDismiss } = React.useContext(ToastContext);
 
   return (
     <div className={`${styles.toast} ${styles[variant]}`}>
@@ -34,7 +38,7 @@ function Toast({ variant, onClose, children }) {
       </p>
       <button
         className={styles.closeButton}
-        onClick={onClose}
+        onClick={handleDismiss}
         aria-label="Dismiss message"
         aria-live="off"
       >
